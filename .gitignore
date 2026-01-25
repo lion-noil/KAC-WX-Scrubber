@@ -52,4 +52,10 @@ dist-ssr
 !docs/
 !docs/**/*.png
 
+# --- keep example assets (tracked) ---
+!src/assets/data/RDM_B2025122401_cat08.json
+!src/assets/data/RDM_B2025122500_cat08.json
+!src/assets/data/RDM_B2025122501_cat08.json
 
+!src/assets/media/20251225.json
+!src/assets/media/20251225.mp4

@@ -114,7 +114,11 @@ function runRender(job) {
         ensureDir(job.renderDir);
 
         job.renderOutDir = path.posix.join(job.outDir, "render");
-        job.manifest = path.posix.join(job.renderOutDir, "manifest.json");
+
+        // ✅ manifest 이름을 날짜로 (mp4와 동일 베이스)
+        const baseName = `${job.dateYmd}`;              // "20260106"
+        job.manifest = path.posix.join(job.renderOutDir, `${baseName}.json`);
+        // 또는 충돌 방지 원하면: `${baseName}.manifest.json`
 
         const pyMain = path.resolve(process.cwd(), "python", "main.py");
         const {cmd, baseArgs} = pickPythonCmd();
@@ -176,7 +180,9 @@ function runRender(job) {
             job.rendering = false;
 
             if (code === 0) {
-                const manifestAbs = safeJoin(job.renderDir, "manifest.json");
+                const baseName = `${job.dateYmd}`;
+                const manifestAbs = safeJoin(job.renderDir, `${baseName}.json`);
+// 또는 `${baseName}.manifest.json`
                 if (!fs.existsSync(manifestAbs)) {
                     job.phase = "error";
                     job.error = "render finished but manifest.json not found";
