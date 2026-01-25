@@ -2,6 +2,38 @@
 
 > 레이더(CAT-08) · 기상 영상 · NC 데이터 기반 비교·분석 도구
 
+
+## 환경 설정 (Environment Setup)
+
+### 필수 실행 환경
+
+- **Node.js**: v18 이상  
+  - 프론트엔드/서버 실행용 (`npm run dev`)
+- **Python**: 3.10 이상  
+  - NC(.nc) 처리, 프레임 렌더링, manifest 생성 등 배치 스크립트 실행용
+- **ffmpeg**: 시스템 설치 필요  
+  - 프레임( PNG/WEBP ) → MP4 생성용
+
+> ⚠️ `ffmpeg`는 Python 패키지가 아니므로 **OS에 직접 설치**되어 있어야 합니다.  
+> 터미널에서 `ffmpeg -version` 으로 설치 여부를 확인할 수 있습니다.
+
+### 설치 (권장 흐름)
+
+```bash
+# 1) Node 의존성
+npm install
+
+# 2) Python 가상환경 (예시)
+python -m venv .venv
+# macOS/Linux
+source .venv/bin/activate
+# Windows (PowerShell)
+# .venv\Scripts\Activate.ps1
+
+# 3) Python 의존성
+pip install -r requirements.txt
+```
+
 ---
 
 ## 프로젝트 개요 (Purpose & Value)
