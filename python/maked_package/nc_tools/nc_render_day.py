@@ -372,16 +372,14 @@ def nc_render_day_main(argv: list[str]):
         "grid": {"size": grid_size, "range_m": max_range_m},
         "frames": frames
     }
-
-    out_manifest = os.path.join(out_dir, "manifest.json")
+    ymd = infer_ymd_from_path(out_dir)  # 이미 아래에서 쓰고 있음
+    out_manifest = os.path.join(out_dir, f"{ymd}.json")  # ✅ 날짜.json
     with open(out_manifest, "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
 
     print("manifest saved:", out_manifest)
     print("total frames:", len(frames))
 
-    # manifest 저장 끝난 뒤
-    ymd = infer_ymd_from_path(out_dir)
     try:
         mp4_path = run_ffmpeg_make_mp4(out_dir, date_ymd=ymd, fps=10, save_ext=save_ext)
         print("mp4 saved:", mp4_path)

@@ -91,7 +91,7 @@ function publicStatus(job) {
         lastSavedAt: job.lastSavedAt || null,
         phase: job.phase || "downloading",          // downloading|rendering|done|error
         renderOutDir: job.renderOutDir || null,     // 프론트 표시용(상대경로)
-        manifest: job.manifest || null,             // 예: "download/.../render/manifest.json"
+        manifest: job.manifest || null,             //
         renderDone: job.renderDone ?? 0,
         renderTotal: job.renderTotal ?? 0,
         renderLastLine: job.renderLastLine ?? null,
@@ -118,7 +118,6 @@ function runRender(job) {
         // ✅ manifest 이름을 날짜로 (mp4와 동일 베이스)
         const baseName = `${job.dateYmd}`;              // "20260106"
         job.manifest = path.posix.join(job.renderOutDir, `${baseName}.json`);
-        // 또는 충돌 방지 원하면: `${baseName}.manifest.json`
 
         const pyMain = path.resolve(process.cwd(), "python", "main.py");
         const {cmd, baseArgs} = pickPythonCmd();
@@ -182,10 +181,9 @@ function runRender(job) {
             if (code === 0) {
                 const baseName = `${job.dateYmd}`;
                 const manifestAbs = safeJoin(job.renderDir, `${baseName}.json`);
-// 또는 `${baseName}.manifest.json`
                 if (!fs.existsSync(manifestAbs)) {
                     job.phase = "error";
-                    job.error = "render finished but manifest.json not found";
+                    job.error = `render finished but ${baseName}.json not found`;
                     return resolve();
                 }
 
