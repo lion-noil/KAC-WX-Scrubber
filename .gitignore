@@ -49,6 +49,7 @@ dist-ssr
 
 !package.json
 !package-lock.json
-
+!docs/
+!docs/**/*.png
 
 
