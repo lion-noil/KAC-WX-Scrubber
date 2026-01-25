@@ -1,0 +1,170 @@
+/* src/pages/final-analysis/RadarReplay.css */
+/* RadarReplay 페이지 전용 스타일 (grid/legend/gauge 등) */
+
+/* 상단 모드 바 */
+.view-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+/* 레이아웃 행 */
+.top-row {
+  flex: 0 0 auto;
+}
+
+.bottom-row {
+  flex: 0 0 auto;
+}
+
+/* 2열 그리드 */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.analysis-card {
+  min-height: 220px;
+}
+
+.card-box {
+  min-height: 0;
+}
+
+/* ==== 컬러바 ===== */
+.legend-bar-container {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.legend-bar {
+  display: flex;
+  height: 18px;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid #444;
+  min-width: 200px;
+  max-width: 360px;
+}
+
+.legend-bar-segment {
+  flex: 1;
+}
+
+.legend-bar-caption {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* ==== 컬러바 crop 미리보기 ===== */
+.legend-preview-box {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.legend-preview-title {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.legend-preview-img {
+  border: 1px solid #555;
+  border-radius: 6px;
+  max-width: 180px;
+}
+
+/* ==== 일치도 게이지 ===== */
+.gauge-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.gauge-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+
+.gauge-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+  gap: 6px;
+}
+
+.gauge-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.gauge-bar-bg {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.gauge-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(244, 67, 54, 0.9),
+    rgba(255, 193, 7, 0.95),
+    rgba(0, 200, 83, 0.95)
+  );
+  transition: width 0.25s ease-out;
+}
+
+/* (?) 아이콘 */
+.gauge-help {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  font-size: 11px;
+  text-align: center;
+  line-height: 16px;
+  cursor: help;
+  opacity: 0.7;
+}
+
+.gauge-help:hover {
+  background: #555;
+  opacity: 1;
+}
+
+.gauge-hint {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+/* === responsive === */
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .view-mode-bar {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "my-radar-replay",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev:fe": "vite",
+    "dev:be": "node server/index.js",
+    "dev": "concurrently -k -n FE,BE -c blue,green \"npm:dev:fe\" \"npm:dev:be\"",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "leaflet": "^1.9.4",
+    "multer": "^2.0.2",
+    "netcdfjs": "^3.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.11.0",
+    "tesseract.js": "^4.1.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "concurrently": "^8.2.2",
+    "vite": "^5.4.0"
+  }
+}
