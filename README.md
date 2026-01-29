@@ -3,38 +3,6 @@
 > 레이더(CAT-08) · 기상 영상 · NC 데이터 기반 비교·분석 도구
 
 
-## 환경 설정 (Environment Setup)
-
-### 필수 실행 환경
-
-- **Node.js**: v18 이상  
-  - 프론트엔드/서버 실행용 (`npm run dev`)
-- **Python**: 3.10 이상  
-  - NC(.nc) 처리, 프레임 렌더링, manifest 생성 등 배치 스크립트 실행용
-- **ffmpeg**: 시스템 설치 필요  
-  - 프레임( PNG/WEBP ) → MP4 생성용
-
-> ⚠️ `ffmpeg`는 Python 패키지가 아니므로 **OS에 직접 설치**되어 있어야 합니다.  
-> 터미널에서 `ffmpeg -version` 으로 설치 여부를 확인할 수 있습니다.
-
-### 설치 (권장 흐름)
-
-```bash
-# 1) Node 의존성
-npm install
-
-# 2) Python 가상환경 (예시)
-python -m venv .venv
-# macOS/Linux
-source .venv/bin/activate
-# Windows (PowerShell)
-# .venv\Scripts\Activate.ps1
-
-# 3) Python 의존성
-pip install -r requirements.txt
-```
-
----
 
 ## 프로젝트 개요 (Purpose & Value)
 
@@ -255,3 +223,132 @@ WX Scrubber의 분석부는
 - 중요한 기상 신호를 놓친 구간 존재 여부
 - 시간대별 레이더 신뢰도 변화
 - 단순 시각 비교를 넘어선 정량적 판단 근거 확보
+
+
+
+
+## 환경 설정 (Environment Setup)
+
+### 필수 실행 환경
+
+- **Node.js**: v18 이상  (`사이트(https://nodejs.org)에서 설치`)
+  - 프론트엔드/서버 실행용 (`npm run dev`)
+- **Python**: 3.10 이상  
+  - NC(.nc) 처리, 프레임 렌더링, manifest 생성 등 배치 스크립트 실행용
+- **ffmpeg**: 시스템 설치 필요  (`winget install ffmpeg`)
+  - 프레임( PNG/WEBP ) → MP4 생성용
+
+### 설치 (권장 흐름)
+
+```bash
+# 1) Node 의존성
+npm install
+
+# 2) Python 가상환경 (예시)
+python -m venv .venv
+# macOS/Linux
+source .venv/bin/activate
+# Windows (PowerShell)
+# .venv\Scripts\Activate.ps1
+
+# 3) Python 의존성
+pip install -r requirements.txt
+```
+
+---
+## 로컬 실행 및 각 기능 이용 가이드 (예시 프로젝트 실행)
+
+### 1. 프로젝트 디렉토리로 이동(cmd 실행)
+```powershell
+cd Documents\KAC-WX-Scrubber
+```
+
+### 2. Python 가상환경 활성화
+
+#### Windows (PowerShell)
+```powershell
+.\KAC-WX-Scrubber\Scripts\Activate
+```
+
+### 3. Node.js 서버 실행
+```bash
+npm run dev
+```
+### 4. 해당 로컬 url로 접속
+ex) http://localhost:5173
+
+### 4. AST → JSON 테스트 (EXAMPLE 폴더)
+
+- `EXAMPLE` 폴더에 있는 AST 파일로 테스트 가능
+- **입력 파일명에 날짜 정보가 반드시 포함되어야 함**
+
+예시:
+```
+RDM_B2025122300.ast
+```
+
+#### 실행 결과
+AST → JSON 변환 시 아래 **2개 파일**이 생성됩니다.
+- 원본 AST 파일
+- 추출된 JSON 파일
+
+저장 경로:
+```
+Documents/KAC-WX-Scrubber/download/SSP/astjson/{날짜}/{임의코드}/{파일명}.ast
+Documents/KAC-WX-Scrubber/download/SSP/astjson/{날짜}/{임의코드}/{파일명}.json
+```
+
+#### 주의사항
+- **jeju2 레이더 데이터만 유효**
+- `jeju0` 데이터는 길이가 일정하지 않아 시간 싱크가 맞지 않음
+
+
+---
+
+### 5-1. 이미지 기반 녹화 (PNG → MP4)
+
+- 녹화 시작 후 **약 280개 이미지가 다운로드되면 자동 중지**
+- 이후 **MP4 생성 버튼을 눌러야 영상 파일이 생성됨**
+
+결과 파일:
+```
+Documents/KAC-WX-Scrubber/download/SSP/png/{날짜}/{임의코드}/wx.mp4
+```
+
+---
+
+### 5-2. RAW (.nc) 파일 기반 추출
+
+1. **NC 파일 1일치 생성 시작**
+2. 생성 완료 후 **중지 (렌더 시작)** 버튼 클릭
+3. 영상 + 프레임 정보 파일 생성
+
+결과 파일:
+```
+Documents/KAC-WX-Scrubber/download/SSP/nc/{날짜}/{임의코드}/render/{날짜}.mp4
+Documents/KAC-WX-Scrubber/download/SSP/nc/{날짜}/{임의코드}/render/{날짜}.json
+```
+
+---
+
+### 3) 최종 분석 페이지
+
+#### (1) AST 기반 JSON 데이터
+- **1일 분석에 JSON 파일 3개 필요**
+
+예시 (2025-12-25 분석 시):
+```
+Documents/KAC-WX-Scrubber/src/assets/data/RDM_B2025122401_cat08.json
+Documents/KAC-WX-Scrubber/src/assets/data/RDM_B2025122500_cat08.json
+Documents/KAC-WX-Scrubber/src/assets/data/RDM_B2025122501_cat08.json
+```
+
+#### (2) RAW 기반 비교 데이터
+- NC 추출로 생성된 MP4 + 프레임 정보 JSON 사용
+
+```
+Documents/KAC-WX-Scrubber/src/assets/media/20251225.mp4
+Documents/KAC-WX-Scrubber/src/assets/media/20251225.json
+```
+
+---
