@@ -2,8 +2,6 @@
 
 > 레이더(CAT-08) · 기상 영상 · NC 데이터 기반 비교·분석 도구
 
-
-
 ## 프로젝트 개요 (Purpose & Value)
 
 **WX Scrubber**는  
@@ -99,6 +97,16 @@ npm run dev
 ---
 
 ## 기상데이터 추출 (이미지 기반)
+## 데이터 수집 방식
+
+본 시스템은 **기상청 API Hub**의 레이더 데이터 API를 활용하여 구현되었습니다.(출처:기상청 https://apihub.kma.go.kr/)
+
+- 레이더 사이트 자료 다운로드 API  
+  https://apihub.kma.go.kr/api/typ04/url/rdr_site_file.php
+
+- 레이더 NC(raw) 파일 다운로드 API  
+  https://apihub.kma.go.kr/api/typ01/url/rdr_file_down_nc.php
+- 
 
 ### 화면 예시
 ![기상데이터 이미지 기반 추출 화면](./docs/images/weather_img_example.png)
